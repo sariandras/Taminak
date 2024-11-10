@@ -1,4 +1,31 @@
+<div id="main">
+  <div id="landing">
+    <div class="cont middle">
+      <h1>Játék Taminak</h1>
+      <br>
+      <button class="pulse-button" (click)="startTaskOne()">Start</button>
 
-  <div id="main">
-    <div class="star"></div>
+    </div>
   </div>
+  <div id="task1" hidden>
+    <div class="transparency">
+      <h1>Játék Taminak</h1>
+      <h1>Csillagok: {{counter}}</h1>
+
+    </div>
+    <div id="stars">
+      @for (s of stars; track $index) {
+        <div class="star-container" [style]="{ top: s.y + 'px', left: s.x + 'px' }" (click)="removeStar(s.id)">
+              <span> &#x2605;</span>
+        </div>
+      }
+
+    </div>
+  </div>
+  <div id="task2" hidden>
+    <h1>Játék <span (click)="win()">Taminak</span></h1>
+    <h1>Válaszd ki a legszebb csillagot!</h1>
+
+  </div>
+  <div id="result" hidden></div>
+</div>

@@ -1,14 +1,119 @@
+@import  url('https://fonts.googleapis.com/css?family=Orbitron:400,900');
 #main{
-  width: 1080px;
-  height: 2034px;
+  width: 100vw;
+  height: 100vh;
   background-image: url('/wallpaper.jpeg');
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
 }
-#main img{
+
+#stars{
+  width: 100vw;
+  height: 60vh;
+}
+
+#task1{
+  height: 100vh;
+}
+.transparency{
+  opacity: 0.5;
+}
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0,0,0,0.5);
+  scroll-behavior: unset;
+}
+*{
+  overflow: hidden;
+
+}
+
+#landing{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.middle {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.cont{
+  display: flex;
+  flex-direction: column;
+}
+
+h1{
+color: white;
+text-align: center;
+padding: 15px;
+}
+
+.star-container {
+  width: 160px;
+  position: absolute;
+  top: 0;
+  text-align: center;
+  font: 900 80px 'Orbitron', sans-serif;
+  background-color: #ffe234;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.star-container:after {
+  content: "★";
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  margin: 0;
+  background: linear-gradient(45deg, rgba(255,255,255,0) 45%, rgba(255,255,255,0.8) 50%,
+    rgba(255,255,255,0) 55%,rgba(255,255,255,0) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200%;
+  animation: shine 3s infinite;
 }
 
+@keyframes shine{
+  0% {
+    background-position: -100%;
+  }
+  100% {
+    background-position: 100%;
+  }
+}
 
+.pulse-button {
+    padding: 5px 5px;
+    font-size: 24px;
+    color: #fff;
+    background: #6200ea;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    }
+}
