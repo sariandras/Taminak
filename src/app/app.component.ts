@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Star } from '../coordinate';
 
 @Component({
@@ -8,75 +8,112 @@ import { Star } from '../coordinate';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit {
-  win() {
-    document.getElementById('task2')!.hidden = true;
-    document.getElementById('result')!.hidden=false;
+export class AppComponent {
+  stars: Star[] = [];
+  faStars = [
+    'fa-solid fa-star-of-life',
+    'fa-regular fa-star',
+    'fa-solid fa-star',
+    'fa-regular fa-sun',
+    'fa-solid fa-certificate',
+  ];
+  counter = 0;
+  won: boolean = false;
 
+  constructor() {
+    this.makeTwoRandomStars();
+  }
+
+  makeTwoRandomStars() {
+    while (this.faStars.length != 2) {
+      this.faStars.splice(this.getRandomInt(0, this.faStars.length), 1);
+    }
+  }
+
+  getRandomInt(min: number, max: number) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+  win(event: Event) {
+    document.getElementById('task2')!.hidden = true;
+    document.getElementById('result')!.hidden = false;
+    console.log(String(event.currentTarget));
+    if (String(event.currentTarget).includes('HTMLSpanElement')) {
+      this.won = true;
+      return;
+    }
+    this.won = false;
   }
   startTaskOne() {
+    this.counter = 0;
     document.getElementById('landing')!.hidden = true;
     document.getElementById('task1')!.hidden = false;
-    this.stars = this.getStarCoordinates(2);
-
-
+    this.stars = this.getStarCoordinates(1);
   }
-  stars: Star[] = [];
-  counter = 0;
-  constructor() {}
-  ngOnInit() {
-  }
-  getRandomX() {
-    let starWidth = 160;
-    //jo a starokhoz
-    let main = document.getElementById('main')
-    let possibleWidth = window.innerWidth - 2 * starWidth;
-    return possibleWidth * Math.random()*2;
-  }
-  getRandomY() {
-    let starHeight = 160;
-    let main = document.getElementById('main');
-    let possibleHeight = window.innerHeight - 2 * starHeight;
-    return possibleHeight * Math.random();
-  }
-  // getStars() {
-  //   let stars = [];
-  //   const divClass = 'star-container';
-  //   for (let i = 0; i < 5; i++) {
-  //     let stringSpan = `<div class="${divClass}" style="top: ${this.getRandomY()}px; left: ${this.getRandomX()}px;">
-  //         <span> &#x2605;</span>
-  //       </div>`;
-  //     // let container = new HTMLDivElement();
-  //     // container.classList.add('star-container');
-  //     // container.style.top = this.getRandomY().toString() + 'px';
-  //     // container.style.left = this.getRandomX().toString() + 'px';
-  //     // let span = new HTMLSpanElement();
-  //     // span.innerText = '&#x2605;';
-  //     // container.appendChild(span);
-  //     stars.push(stringSpan);
-  //   }
-  //   return stars;
-  // }
-  getStarCoordinates(count:number){
-    let starPos:Star[] = []
-    for (let i = 0; i < count; i++) {
-      let coord: Star = {id:i ,x: this.getRandomX(), y: this.getRandomY() };
-      starPos.push(coord)
-    }
-    return starPos;
-  }
-  removeStar(id:number){
-    this.stars = this.stars.filter(s=>s.id!=id)
-    this.counter++;
-    if (this.counter==1) {
-      startTaskTwo();
-    }
-  }
-}
-
-function startTaskTwo() {
+  startTaskTwo() {
     document.getElementById('task1')!.hidden = true;
     document.getElementById('task2')!.hidden = false;
+  }
+  getStarCoordinates(count: number) {
+    const starSize = 160;
+    const starPos: Star[] = [];
 
+    for (let i = 0; i < count; i++) {
+      let isValidPosition = false;
+      let coord: Star | null = null;
+
+      while (!isValidPosition) {
+        coord = {
+          id: i,
+          x: this.getRandomX(starSize),
+          y: this.getRandomY(starSize),
+        };
+
+        isValidPosition = starPos.every(
+          (existingStar) =>
+            !this.areCoordinatesTooClose(existingStar, coord!, starSize)
+        );
+      }
+
+      starPos.push(coord!);
+    }
+
+    return starPos;
+  }
+
+  getRandomX(starSize: number) {
+    const margin = starSize;
+    const possibleWidth = window.innerWidth - 2 * margin;
+
+    return margin + Math.random() * possibleWidth;
+  }
+
+  getRandomY(starSize: number) {
+    const margin = starSize;
+    const possibleHeight = window.innerHeight - 2 * margin;
+
+    return margin + Math.random() * possibleHeight;
+  }
+
+  areCoordinatesTooClose(
+    star1: Star,
+    star2: Star,
+    minDistance: number
+  ): boolean {
+    const dx = star1.x - star2.x;
+    const dy = star1.y - star2.y;
+    const distance = Math.sqrt(dx * dx + dy * dy);
+    return distance < minDistance;
+  }
+
+  removeStar(id: number) {
+    this.stars = this.stars.filter((s) => s.id != id);
+    this.counter++;
+    if (this.counter == 1) {
+      this.startTaskTwo();
+    }
+  }
 }
+
 

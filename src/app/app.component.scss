@@ -4,8 +4,9 @@
   height: 100vh;
   background-image: url('/wallpaper.jpeg');
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: 100%;
 }
+
 
 #stars{
   width: 100vw;
@@ -32,7 +33,7 @@ body {
 
 }
 
-#landing{
+#landing, #result{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -53,6 +54,7 @@ h1{
 color: white;
 text-align: center;
 padding: 15px;
+font-size: 10vw;
 }
 
 .star-container {
@@ -60,7 +62,7 @@ padding: 15px;
   position: absolute;
   top: 0;
   text-align: center;
-  font: 900 80px 'Orbitron', sans-serif;
+  font: 900 160px 'Orbitron', sans-serif;
   background-color: #ffe234;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -92,7 +94,7 @@ padding: 15px;
 
 .pulse-button {
     padding: 5px 5px;
-    font-size: 24px;
+    font-size: 40pt;
     color: #fff;
     background: #6200ea;
     border: none;
@@ -116,4 +118,18 @@ padding: 15px;
         transform: scale(0.95);
         box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
     }
+}
+
+.choices{
+  margin-top: 30vh;
+  display: flex;
+  justify-items: stretch;
+  justify-content: space-between;
+
+}
+.choice{
+  font-size: 35vw;
+  display: flex;
+  color: white;
+
 }
